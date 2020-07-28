@@ -8,11 +8,7 @@
 
 import React, { useRef, useCallback } from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
-  View,
-  Text,
   StatusBar,
 } from 'react-native';
 import { NavigationContainer, TabActions } from "@react-navigation/native";
@@ -21,16 +17,12 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 
 import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
+  Colors
 } from 'react-native/Libraries/NewAppScreen';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 
 import { InjectionProvider } from './src/injection/InjectionProvider';
 import { UnhcrContainer } from './src/injection/container';
@@ -39,11 +31,16 @@ import { join } from "redux-saga/effects";
 import { useInjection } from "./src/injection/useInjection";
 import { HomeScreen } from "./src/tabs/HomeScreen";
 import  MapScreen from "./src/tabs/MapScreen";
+import { Localizer, SupportedLanguage } from './src/localization/Localizer';
+import { StringId } from './src/localization/stringIds';
+import { getLanguage } from './src/localization/selectors';
 
-// const reduxStore = initStore();
+const reduxStore = initStore();
 const Tab = createBottomTabNavigator();
 
 const AppContent = () => {
+  const language = useSelector(getLanguage);
+
   return(
     <>
     <StatusBar barStyle="dark-content" />
@@ -53,11 +50,11 @@ const AppContent = () => {
             tabBarIcon: ({ focused, color, size }) => {
               let iconName;
   
-              if (route.name === 'Home') {
+              if (route.name === Localizer.getString(language, StringId.Home_Tab)) {
                 iconName = focused
                   ? 'home'
                   : 'home-outline';
-              } else if (route.name === 'Map') {
+              } else if (route.name === Localizer.getString(language, StringId.Map_Tab)) {
                 iconName = focused ? 'navigate-circle' : 'navigate-circle-outline';
               }
   
@@ -70,8 +67,8 @@ const AppContent = () => {
             inactiveTintColor: 'gray',
           }}
         >
-          <Tab.Screen name="Home" component={HomeScreen} />
-          <Tab.Screen name="Map" component={MapScreen} />
+          <Tab.Screen name={Localizer.getString(language, StringId.Home_Tab)} component={HomeScreen} />
+          <Tab.Screen name={Localizer.getString(language, StringId.Map_Tab)} component={MapScreen} />
         </Tab.Navigator>
       </NavigationContainer>
     </>
@@ -80,9 +77,11 @@ const AppContent = () => {
 
 const App = React.memo(() => (
   <InjectionProvider container={UnhcrContainer}>
+    <Provider store={reduxStore}>
       <SafeAreaProvider>
         <AppContent />
       </SafeAreaProvider>
+    </Provider>
   </InjectionProvider>
 ));
 App.displayName = "App";
