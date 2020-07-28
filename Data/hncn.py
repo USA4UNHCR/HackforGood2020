@@ -1,5 +1,6 @@
 # script to merge HelloNeighbor and CharityNavigator datasets
 import pandas as pd
+import json
 
 hnurl="https://raw.githubusercontent.com/USA4UNHCR/HackforGood2020/master/Data/HelloNeighbor.csv"
 hn=pd.read_csv(hnurl)
@@ -18,4 +19,7 @@ cn.drop(columns = {'ein','ntee','address'}, inplace=True)
 # concatenate 
 hncn = pd.concat([hn,cn], sort=False)
 hncn.to_csv('hncn.csv')
-hncn.to_json('hncn.json', orient='records')
+
+with open('df.json', 'w') as f:
+    f.write(hncn.to_json(orient='records'))
+
