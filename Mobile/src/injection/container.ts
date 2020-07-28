@@ -1,6 +1,5 @@
 import { Container } from "inversify";
 
-
 export const UnhcrContainer = new Container({ defaultScope: "Singleton"});
 configureContainer(UnhcrContainer);
 
