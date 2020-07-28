@@ -38,7 +38,7 @@ import { initStore } from './src/redux/store';
 import { join } from "redux-saga/effects";
 import { useInjection } from "./src/injection/useInjection";
 import { HomeScreen } from "./src/tabs/HomeScreen";
-import { MapScreen } from "./src/tabs/MapScreen";
+import  MapScreen from "./src/tabs/MapScreen";
 
 // const reduxStore = initStore();
 const Tab = createBottomTabNavigator();
