@@ -31,6 +31,7 @@ import { join } from "redux-saga/effects";
 import { useInjection } from "./src/injection/useInjection";
 import { HomeScreen } from "./src/tabs/HomeScreen";
 import  MapScreen from "./src/tabs/MapScreen";
+import { OrgTableScreen } from './src/tabs/OrgTableScreen';
 import { Localizer, SupportedLanguage } from './src/localization/Localizer';
 import { StringId } from './src/localization/stringIds';
 import { getLanguage } from './src/localization/selectors';
@@ -49,14 +50,19 @@ const AppContent = () => {
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
               let iconName;
-  
-              if (route.name === Localizer.getString(language, StringId.Home_Tab)) {
-                iconName = focused
-                  ? 'home'
-                  : 'home-outline';
-              } else if (route.name === Localizer.getString(language, StringId.Map_Tab)) {
-                iconName = focused ? 'navigate-circle' : 'navigate-circle-outline';
-              }
+
+              switch (route.name) {
+                case Localizer.getString(language, StringId.Map_Tab):
+                  iconName = focused ? 'navigate-circle' : 'navigate-circle-outline';
+                  break;
+                // TODO: add localize string for OrgTable here, and below Tab.Screen element
+                case 'OrgTable':
+                  iconName = focused ? 'list' : 'list-outline';
+                  break;
+                case Localizer.getString(language, StringId.Home_Tab):
+                default:
+                  iconName = focused ? 'home' : 'home-outline';
+               }
   
               // You can return any component that you like here!
               return <Ionicons name={iconName} size={size} color={color} />;
@@ -69,6 +75,7 @@ const AppContent = () => {
         >
           <Tab.Screen name={Localizer.getString(language, StringId.Home_Tab)} component={HomeScreen} />
           <Tab.Screen name={Localizer.getString(language, StringId.Map_Tab)} component={MapScreen} />
+          <Tab.Screen name="OrgTable" component={OrgTableScreen} />
         </Tab.Navigator>
       </NavigationContainer>
     </>
