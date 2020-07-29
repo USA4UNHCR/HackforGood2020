@@ -11,7 +11,7 @@ export const OrgTableScreen = React.memo(( { route }) => {
     const [category, setCategory] = useState(defaultCategory);
 
     React.useEffect(() => {
-        if (route) {
+        if (route && route.params) {
             const { selectedCategory } = route.params;
             setCategory(selectedCategory);
         }
@@ -57,7 +57,7 @@ export const OrgTableScreen = React.memo(( { route }) => {
 
 
     return (
-        <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: 'column' }}>
+        <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: 'column', paddingTop: 80 }}>
             <DropDownPicker
                 items={mockdata.categories}
                 defaultValue={category}
