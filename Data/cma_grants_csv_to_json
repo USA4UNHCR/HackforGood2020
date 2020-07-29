@@ -1,0 +1,21 @@
+# script to merge HelloNeighbor and CharityNavigator datasets
+import pandas as pd
+
+cmaGrantsUrl="https://raw.githubusercontent.com/USA4UNHCR/HackforGood2020/master/Data/CMA%20Formula%20Grants.csv"
+cma=pd.read_csv(cmaGrantsUrl)
+# standardize column names
+# Timestamp,Name of refugee or immigrant assistance agency,City,State,Country,Website,Contact Information (Email),Contact Information (Phone Number),Contact Information (Phone Number),Partners or Collaborating Organizations,Core Program Offerings,What are the current needs for volunteers or other?,Additional comments?,Who are you? (Ok to leave blank),Your email address
+cma.columns = ['year','state','org_name','CASH_AND_MEDICAL_ASSISTANCE','REFUGEE_SOCIAL_SERVICES_PROGRAM','TARGETED_ASSISTANCE_PROGRAM','WILSON_FISH_DISCRETIONARY_CMA']
+cma.drop(columns = {'year', 'state'}, inplace=True)
+#cma.drop(columns = {'CASH_AND_MEDICAL_ASSISTANCE','REFUGEE_SOCIAL_SERVICES_PROGRAM','TARGETED_ASSISTANCE_PROGRAM', 'WILSON_FISH_DISCRETIONARY_CMA'}, inplace=True)
+
+cnurl="https://raw.githubusercontent.com/USA4UNHCR/HackforGood2020/master/Data/CharityNavigator.csv"
+cn=pd.read_csv(cnurl)
+# standardize column names
+# organization_ein,nonprofit_name,irsclassification_nteecode,category,address,city,state,zipcode,website
+cn.columns = ['ein','org_name','ntee','services','address','city','state','zipcode','website']
+cn.drop(columns = {'ein','ntee'}, inplace=True)
+
+# concatenate 
+merged = pd.concat([cma,cn], sort=False)
+merged.to_json('cmaFormulaGrants.json', orient='records')
