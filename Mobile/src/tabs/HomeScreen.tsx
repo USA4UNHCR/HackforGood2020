@@ -65,7 +65,7 @@ export const HomeScreen = React.memo(( { navigation }) => {
     });
 
     return (
-        <View style={{ flex: 1, paddingTop: 30, paddingHorizontal: 15 }}>
+        <View style={{ flex: 1, paddingTop: 80, paddingHorizontal: 15 }}>
             <View style={styles.language}>
                 <Text style={styles.text}>{Localizer.getString(language, StringId.Change_Language)}</Text>
                 <DropDownPicker
