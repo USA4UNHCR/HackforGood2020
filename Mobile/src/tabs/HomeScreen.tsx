@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import { CommonActions } from '@react-navigation/native';
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector, useDispatch } from "react-redux";
 import DropDownPicker from "react-native-dropdown-picker";
 import { getLanguage } from '../localization/selectors';
@@ -8,12 +8,12 @@ import { updateLanguage } from '../localization/actions';
 import { SupportedLanguage, Localizer } from '../localization/Localizer';
 import { StringId } from '../localization/stringIds';
 import mockdata from './mock';
-import { OrgTableScreen } from './OrgTableScreen';
 
 const styles = StyleSheet.create({
     language: {
         flexDirection: "row",
-        alignItems: "center"
+        alignItems: "center",
+        marginBottom: 70
     },
     text: {
         marginRight: 8
@@ -68,21 +68,21 @@ export const HomeScreen = React.memo(( { navigation }) => {
         <View style={{ flex: 1, paddingTop: 80, paddingHorizontal: 15 }}>
             <View style={styles.language}>
                 <Text style={styles.text}>{Localizer.getString(language, StringId.Change_Language)}</Text>
-                <DropDownPicker
-                    items={[
-                        {label: SupportedLanguage.English.toString(), value: SupportedLanguage.English},
-                        {label: SupportedLanguage.Espanol.toString(), value: SupportedLanguage.Espanol}
-                    ]}
-                    defaultValue={language}
-                    placeholder={changeLanguage}
-                    containerStyle={{height: 40, flexGrow: 1}}
-                    style={{backgroundColor: '#fafafa'}}
-                    itemStyle={{
-                        justifyContent: 'flex-start'
-                    }}
-                    dropDownStyle={{backgroundColor: '#fafafa'}}
-                    onChangeItem={item => onChange(item.value)}
-                />
+                    <DropDownPicker
+                        items={[
+                            {label: SupportedLanguage.English.toString(), value: SupportedLanguage.English},
+                            {label: SupportedLanguage.Espanol.toString(), value: SupportedLanguage.Espanol}
+                        ]}
+                        defaultValue={language}
+                        placeholder={changeLanguage}
+                        containerStyle={{height: 40, flexGrow: 1}}
+                        style={{backgroundColor: '#fafafa', width: '100%'}}
+                        itemStyle={{
+                            justifyContent: 'flex-start'
+                        }}
+                        dropDownStyle={{backgroundColor: '#fafafa'}}
+                        onChangeItem={item => onChange(item.value)}
+                    />
             </View>
             <View style={styles.gridContainer}>
                 <Text style={styles.headerText}>{Localizer.getString(language, StringId.Choose_Assistance_Category)}</Text>
