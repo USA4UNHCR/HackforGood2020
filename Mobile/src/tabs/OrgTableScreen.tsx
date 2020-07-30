@@ -5,14 +5,18 @@ import { useState } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-
-
-
-export const OrgTableScreen = React.memo(() => {
-
-    const defaultCategory = "Healthcare";
+export const OrgTableScreen = React.memo(( { route }) => {
+    
+    let defaultCategory = "Healthcare";
     const [category, setCategory] = useState(defaultCategory);
 
+    React.useEffect(() => {
+        if (route && route.params) {
+            const { selectedCategory } = route.params;
+            setCategory(selectedCategory);
+        }
+    })
+    
     const orgList = () => {
         const list = mockdata.data.filter(org => {
             // console.log('org category' + org.category.toLowerCase())
@@ -53,7 +57,7 @@ export const OrgTableScreen = React.memo(() => {
 
 
     return (
-        <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: 'column' }}>
+        <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: 'column', paddingTop: 80 }}>
             <DropDownPicker
                 items={mockdata.categories}
                 defaultValue={category}

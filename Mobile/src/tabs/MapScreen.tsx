@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Geolocation from "@react-native-community/geolocation";
 import { Text, View, StyleSheet } from 'react-native';
-import MapView, {PROVIDER_GOOGLE} from "react-native-maps";
+import MapView from "react-native-maps";
 import { Component } from 'react';
 
 const styles = StyleSheet.create({
